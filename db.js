@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 module.exports = () =>{
     mongoose.connect(process.env.DB_URL, {
         useNewUrlParser: true, 
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     })
     .then(() => console.log("Connected to database"))
     .catch( err =>{
