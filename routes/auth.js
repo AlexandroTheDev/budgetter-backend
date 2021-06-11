@@ -3,6 +3,7 @@ const User = require('../models/User')
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { verifyUser } = require('../utils')
 
 // @path        /api/auth/
 // @method      POST
@@ -30,6 +31,15 @@ router.post('/',(req,res,next) =>{
         }
     })
     .catch(next)
+})
+
+// @path        /api/auth
+// @method      GET
+// @desc        retrieve logged user details
+router.get('/', verifyUser, (req,res,next) =>{
+    res.json({
+        user: req.user
+    })
 })
 
 module.exports = router
