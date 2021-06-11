@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const CategorySchema = new mongoose.Schema({
     name : {
         type: String,
-        required : [ true, "Category name required"]
+        required : [ true, "Category name required"],
+        unique: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,4 +13,4 @@ const CategorySchema = new mongoose.Schema({
     }
 })
 
-module.exports = model('Category', CategorySchema)
+module.exports = mongoose.model('Category', CategorySchema)

@@ -21,6 +21,7 @@ app.use(morgan('dev'))
 // Routes
 app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/categories', require('./routes/categories'))
 
 // Error handling middleware
 app.use((err,req,res,next)=>{
