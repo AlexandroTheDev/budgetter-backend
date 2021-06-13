@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../models/User');
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // @path        /api/users
 // @method      POST
@@ -15,7 +16,13 @@ router.post('/', (req,res,next)=>{
         req.body.password = hashedPassword
         return User.create(req.body)
     })
-    .then( () => res.json({message: "Registration Successful"}))
+    .then( user => {
+        let token = jwt.sign({userId: user._id}, process.env.SECRET)
+        user.password = undefined
+        res.json({
+            token
+        })
+    })
     .catch( err => {
         console.log(err.name)
         if(err.name === "ValidationError"){
