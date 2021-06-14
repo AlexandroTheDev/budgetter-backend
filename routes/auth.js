@@ -23,9 +23,7 @@ router.post('/',(req,res,next) =>{
             next(new Error("Invalid Credentials"))
         } else {
             let token = jwt.sign({userId: req.user._id}, process.env.SECRET)
-            req.user.password = undefined
             res.json({
-                user : req.user,
                 token
             })
         }

@@ -10,11 +10,12 @@ module.exports.verifyUser = (req,res,next) =>{
         res.status(401)
         throw new Error("Unauthorize")
     }
-
+    
     try {
         let token = authorization.slice(7,authorization.length)
         let decoded = jwt.verify(token, process.env.SECRET)
         
+        console.log(decoded)
         User.findById(decoded.userId).select({password: 0})
         .then( user => {
             if(!user) {

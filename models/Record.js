@@ -20,6 +20,10 @@ const RecordSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: [true, "Record creator required"]
+    },
+    date: {
+        type: Date,
+        default: new Date()
     }
 },{ timestamps: true })
 

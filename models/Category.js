@@ -4,7 +4,6 @@ const CategorySchema = new mongoose.Schema({
     name : {
         type: String,
         required : [ true, "Category name required"],
-        unique: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

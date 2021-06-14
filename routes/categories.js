@@ -17,8 +17,6 @@ router.post('/', verifyUser, (req,res,next) =>{
     .catch( err =>{
         if(err.name === "ValidationError"){
             next(new Error("Please check input fields"))
-        } else if( err.name === "MongoError") {
-            next(new Error("Email address already in use"))
         } else {
             next(err)
         }

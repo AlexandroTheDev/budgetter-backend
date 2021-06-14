@@ -11,7 +11,14 @@ router.post('/', (req,res,next)=>{
     if (password.length < 8) throw new Error("Password must be atleast 8 characters")
     if (password !== confirmPassword) throw new Error("Passwords should matched")
 
-    bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
+    User.findOne({email : req.body.email})
+    .then( user =>{
+        if (user) {
+            next(new Error("Email address already in use"))
+        } else {
+            return bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
+        }
+    })
     .then( hashedPassword =>{
         req.body.password = hashedPassword
         return User.create(req.body)
