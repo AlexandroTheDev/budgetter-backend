@@ -13,6 +13,9 @@ router.post('/', verifyUser, (req,res,next)=>{
         ...req.body
     })
     .then( record => {
+        return Record.findById(record._id).populate("category")
+    })
+    .then( record => {
         res.send(record)
     })
     .catch( err => {
@@ -33,7 +36,7 @@ router.post('/', verifyUser, (req,res,next)=>{
 router.get('/', verifyUser, (req,res,next) =>{
 
     Record.find({user: req.user._id})
-    .sort('-createdAt')
+    .sort('-date')
     .populate('category')
     .then( records => {
         res.send(records)
