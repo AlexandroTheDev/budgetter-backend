@@ -1,4 +1,5 @@
 const Category = require('../models/Category')
+const Record = require('../models/Record')
 const { verifyUser } = require('../utils')
 
 const router = require('express').Router()
@@ -78,9 +79,13 @@ router.put('/:id', verifyUser, (req,res,next) => {
 // @method      Delete
 // @desc        Remove single category belong to user
 router.delete('/:id', verifyUser, (req,res,next) => {
-    Category.findOneAndDelete({
-        user : req.user.id,
-        _id : req.params.id
+    Record.deleteMany({ category : req.params.id})
+    .then( records => {
+
+        return Category.findOneAndDelete({
+            user : req.user.id,
+            _id : req.params.id
+        })
     })
     .then( category => {
         if(category){
